@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('menus') }}" class="text-white hover:text-green-600 font-medium">
+                    <a href="{{ route('menu') }}" class="text-white hover:text-green-600 font-medium">
                         Back
                     </a>
                     <form action="{{ route('logout') }}" method="POST" class="ml-4">

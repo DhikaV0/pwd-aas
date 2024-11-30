@@ -14,7 +14,7 @@ class MenuController extends Controller
     public function index()
     {
         $menus = Menu::with('category')->get(); // Memuat menu beserta kategori
-        return view('menus.index', compact('menus'));
+        return view('dashboard', compact('menus'));
     }
 
     /**
@@ -23,7 +23,7 @@ class MenuController extends Controller
     public function create()
     {
         $categories = Category::all(); // Ambil semua kategori
-        return view('menus.create', compact('categories'));
+        return view('create', compact('categories'));
     }
 
     public function dashboard()
@@ -55,7 +55,7 @@ class MenuController extends Controller
      */
     public function show(Menu $menu)
     {
-        return view('menus.show', compact('menu'));
+        return view('home', compact('menu'));
     }
 
     /**
@@ -64,7 +64,7 @@ class MenuController extends Controller
     public function edit(Menu $menu)
     {
         $categories = Category::all(); // Ambil semua kategori
-        return view('menus.edit', compact('menu', 'categories'));
+        return view('edit', compact('menu', 'categories'));
     }
 
     /**
@@ -81,7 +81,7 @@ class MenuController extends Controller
 
         $menu->update($request->only('name', 'description', 'price', 'category_id'));
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil diperbarui.');
+        return redirect()->route('dashboard')->with('success', 'Menu berhasil diperbarui.');
     }
 
     /**
@@ -91,6 +91,6 @@ class MenuController extends Controller
     {
         $menu->delete();
 
-        return redirect()->route('menus.index')->with('success', 'Menu berhasil dihapus.');
+        return redirect()->route('dashboard')->with('success', 'Menu berhasil dihapus.');
     }
 }
