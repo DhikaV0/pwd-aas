@@ -30,11 +30,18 @@ Route::get('/dashboard', [MenuController::class, 'dashboard'])->name('dashboard'
 // Menu-related routes
 Route::middleware('auth')->group(function () {
     // Route to display menu list
-    Route::get('', [MenuController::class, 'show'])->name('index');
+    Route::get('/', [MenuController::class, 'show'])->name('.index');
 
     // Route to create a menu
-    Route::get('create', [MenuController::class, 'create'])->name('create'); // **Route create**
-    Route::post('', [MenuController::class, 'store'])->name('store');
+    Route::get('/create', [MenuController::class, 'create'])->name('create');
+    Route::post('/', [MenuController::class, 'store'])->name('store');
+
+    // Route untuk menu
+    Route::middleware('auth')->group(function () {
+        Route::get('/menu', function () {
+            return view('menu'); // Arahkan langsung ke views/menu.blade.php
+        })->name('menu'); // Route untuk menu.blade.php
+    });
 
     // Route to edit and update a menu
     Route::get('edit', [MenuController::class, 'edit'])->name('edit');

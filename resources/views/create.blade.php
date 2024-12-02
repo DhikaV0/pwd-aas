@@ -6,7 +6,7 @@
     <title>Tambah Menu - RestoGw</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-green-100 min-h-screen flex flex-col">
+<body class="bg-white min-h-screen flex flex-col">
 
     <nav class="bg-green-500 border-gray-200 shadow">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -16,7 +16,7 @@
                 </div>
 
                 <div class="hidden md:flex items-center space-x-8">
-                    <a href="{{ route('menu') }}" class="text-white hover:text-green-600 font-medium">
+                    <a href="{{ route('dashboard') }}" class="text-white hover:text-green-600 font-medium">
                         Back
                     </a>
                     <form action="{{ route('logout') }}" method="POST" class="ml-4">
@@ -45,8 +45,8 @@
         <h2 class="text-green-600 text-xl font-bold mb-4">Tambah Menu Baru</h2>
 
         <!-- Form Tambah Menu -->
-        <div class="bg-white shadow-md rounded-lg p-6">
-            <form action="{{ route('menus.store') }}" method="POST">
+        <div class="bg-green-100 shadow-md rounded-lg p-6">
+            <form action="{{ route('store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-medium mb-2">Nama Menu</label>
@@ -87,8 +87,5 @@
         </div>
     </div>
 
-    <footer class="bg-green-600 text-white text-center py-2">
-        <p>&copy; 2024 Pemesanan Makanan</p>
-    </footer>
 </body>
 </html>

@@ -13,7 +13,7 @@
         }
     </script>
 </head>
-<body class="bg-green-100 min-h-screen flex flex-col">
+<body class="bg-white min-h-screen flex flex-col">
 
     <!-- Navbar -->
     <nav class="bg-green-500 border-gray-200 shadow">
@@ -29,6 +29,9 @@
                     </a>
                     <a href="{{ route('create') }}" class="text-white hover:text-green-600 font-medium">
                         Tambah Pesanan
+                    </a>
+                    <a href="{{ route('home') }}" class="text-white hover:text-green-600 font-medium">
+                        Kembali
                     </a>
                     <form action="{{ route('logout') }}" method="POST" class="ml-4">
                         @csrf
@@ -93,11 +96,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Footer -->
-    <footer class="bg-green-600 text-white text-center py-2">
-        <p>&copy; 2024 Pemesanan Makanan</p>
-    </footer>
 
 </body>
 </html>
