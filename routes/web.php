@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
+use App\Http\Controllers\MenuCreateController; // Tambahkan controller baru
 
 /*
 |--------------------------------------------------------------------------
@@ -29,26 +30,20 @@ Route::get('/dashboard', [MenuController::class, 'dashboard'])->name('dashboard'
 
 // Menu-related routes
 Route::middleware('auth')->group(function () {
+
     // Route to display menu list
-    Route::get('/', [MenuController::class, 'show'])->name('.index');
+    Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
-    // Route to create a menu
-    Route::get('/create', [MenuController::class, 'create'])->name('create');
-    Route::post('/', [MenuController::class, 'store'])->name('store');
+    // Routes for creating menu
+    Route::get('/create', [MenuCreateController::class, 'create'])->name('create');
+    Route::post('/menu', [MenuCreateController::class, 'store'])->name('store');
 
-    // Route untuk menu
-    Route::middleware('auth')->group(function () {
-        Route::get('/menu', function () {
-            return view('menu'); // Arahkan langsung ke views/menu.blade.php
-        })->name('menu'); // Route untuk menu.blade.php
-    });
-
-    // Route to edit and update a menu
-    Route::get('edit', [MenuController::class, 'edit'])->name('edit');
-    Route::put('menu', [MenuController::class, 'update'])->name('update');
+    // Routes for editing and updating menu
+    Route::get('/menu/{menu}/edit', [MenuController::class, 'edit'])->name('menu.edit');
+    Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
 
     // Route to delete a menu
-    Route::delete('', [MenuController::class, 'destroy'])->name('destroy');
+    Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])->name('menu.destroy');
 });
 
 // Static pages

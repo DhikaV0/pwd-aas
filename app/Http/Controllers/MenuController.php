@@ -18,39 +18,6 @@ class MenuController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $categories = Category::all(); // Ambil semua kategori
-        return view('create', compact('categories'));
-    }
-
-    public function dashboard()
-{
-    $menus = Menu::with('category')->get(); // Ambil semua menu dengan relasi kategori
-    return view('dashboard', compact('menus')); // Kirim data ke view dashboard
-}
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-{
-    $request->validate([
-        'name' => 'required|string|max:255',
-        'description' => 'nullable|string',
-        'price' => 'required|integer|min:0',
-        'category_id' => 'required|exists:categories,id',
-    ]);
-
-    Menu::create($request->only('name', 'description', 'price', 'category_id'));
-
-    // Redirect ke dashboard setelah berhasil menyimpan
-    return redirect()->route('dashboard')->with('success', 'Menu berhasil dibuat.');
-}
-
-    /**
      * Display the specified resource.
      */
     public function show(Menu $menu)
@@ -76,10 +43,28 @@ class MenuController extends Controller
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
             'price' => 'required|integer|min:0',
-            'category_id' => 'required|exists:categories,id',
+            'category_id' => 'nullable|exists:categories,id',
+            'new_category' => 'nullable|string|max:255',
         ]);
 
-        $menu->update($request->only('name', 'description', 'price', 'category_id'));
+        // Simpan kategori baru jika diisi
+        if ($request->filled('new_category')) {
+            $category = Category::create(['categoryname' => $request->new_category]); // Menggunakan kolom 'categoryname'
+            $request->merge(['category_id' => $category->id]);
+        }
+
+        // Validasi ulang jika kategori tidak diisi
+        if (!$request->filled('category_id')) {
+            return redirect()->back()->withErrors(['category_id' => 'Kategori harus dipilih atau ditambahkan.']);
+        }
+
+        // Update menu
+        $menu->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+        ]);
 
         return redirect()->route('dashboard')->with('success', 'Menu berhasil diperbarui.');
     }
@@ -92,5 +77,14 @@ class MenuController extends Controller
         $menu->delete();
 
         return redirect()->route('dashboard')->with('success', 'Menu berhasil dihapus.');
+    }
+
+    /**
+     * Dashboard view with menus.
+     */
+    public function dashboard()
+    {
+        $menus = Menu::with('category')->get(); // Ambil semua menu dengan relasi kategori
+        return view('dashboard', compact('menus')); // Kirim data ke view dashboard
     }
 }

@@ -51,7 +51,8 @@
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-medium mb-2">Nama Menu</label>
                     <input type="text" name="name" id="name" required
-                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+                           style="height: 60px">
                 </div>
 
                 <div class="mb-4">
@@ -63,19 +64,41 @@
                 <div class="mb-4">
                     <label for="price" class="block text-gray-700 font-medium mb-2">Harga</label>
                     <input type="number" name="price" id="price" required min="0"
-                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+                           style="height: 60px">
                 </div>
 
                 <div class="mb-4">
                     <label for="category_id" class="block text-gray-700 font-medium mb-2">Kategori</label>
                     <select name="category_id" id="category_id" required
-                            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500">
+                            class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+                            style="height: 60px">
                         <option value="" disabled selected>Pilih Kategori</option>
                         @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            <option value="{{ $category->id }}">{{ $category->categoryname }}</option>
                         @endforeach
+                        <option value="add-new">Tambahkan Kategori Baru</option>
                     </select>
                 </div>
+
+                <!-- Input kategori baru -->
+                <div id="newCategoryInput" class="mb-4 hidden">
+                    <label for="new_category" class="block text-gray-700 font-medium mb-2">Kategori Baru</label>
+                    <input type="text" name="new_category" id="new_category"
+                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
+                           style="height: 60px">
+                </div>
+
+                <script>
+                    document.getElementById('category_id').addEventListener('change', function () {
+                        const newCategoryInput = document.getElementById('newCategoryInput');
+                        if (this.value === 'add-new') {
+                            newCategoryInput.classList.remove('hidden');
+                        } else {
+                            newCategoryInput.classList.add('hidden');
+                        }
+                    });
+                </script>
 
                 <div class="flex justify-end">
                     <button type="submit"
