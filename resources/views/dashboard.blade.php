@@ -27,7 +27,7 @@
                     <a href="#" onclick="toggleModal('menuModal')" class="text-white hover:text-green-600 font-medium">
                         Daftar Menu
                     </a>
-                    <a href="{{ route('create') }}" class="text-white hover:text-green-600 font-medium">
+                    <a href="{{ route('menus.create') }}" class="text-white hover:text-green-600 font-medium">
                         Tambah Pesanan
                     </a>
                     <a href="{{ route('home') }}" class="text-white hover:text-green-600 font-medium">

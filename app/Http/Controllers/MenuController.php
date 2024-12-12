@@ -18,6 +18,47 @@ class MenuController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        $categories = Category::all(); // Ambil semua kategori
+        return view('create', compact('categories'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'nullable|string|max:1000',
+            'price' => 'required|integer|min:0',
+            'category_id' => 'required_if:new_category,null|exists:categories,id',
+            'new_category' => 'nullable|string|max:255',
+        ]);
+
+        // Simpan kategori baru jika dipilih
+        if ($request->category_id === 'add-new' && $request->new_category) {
+            $category = Category::create([
+                'categoryname' => $request->new_category,
+            ]);
+            $request->merge(['category_id' => $category->id]);
+        }
+
+        // Simpan data menu ke database
+        Menu::create([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category_id,
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'Menu berhasil ditambahkan!');
+    }
+
+    /**
      * Display the specified resource.
      */
     public function show(Menu $menu)
@@ -41,7 +82,7 @@ class MenuController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:1000',
             'price' => 'required|integer|min:0',
             'category_id' => 'nullable|exists:categories,id',
             'new_category' => 'nullable|string|max:255',

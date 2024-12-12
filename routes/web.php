@@ -3,8 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
-use App\Http\Controllers\MenuCreateController; // Tambahkan controller baru
-
+use App\Http\Controllers\MenuCreateController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -34,9 +33,11 @@ Route::middleware('auth')->group(function () {
     // Route to display menu list
     Route::get('/menu', [MenuController::class, 'index'])->name('menu.index');
 
-    // Routes for creating menu
-    Route::get('/create', [MenuCreateController::class, 'create'])->name('create');
-    Route::post('/menu', [MenuCreateController::class, 'store'])->name('store');
+    Route::middleware('auth')->group(function () {
+        Route::get('/menus/create', [MenuCreateController::class, 'create'])->name('menus.create');
+        Route::post('/menus', [MenuController::class, 'store'])->name('menus.menu');
+        
+    });
 
     // Routes for editing and updating menu
     Route::get('/menu/{menu}/edit', [MenuController::class, 'edit'])->name('menu.edit');

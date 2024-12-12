@@ -21,12 +21,7 @@ class Menu extends Model
      *
      * @var array
      */
-    protected $fillable = [
-        'name',        // Nama menu
-        'description', // Deskripsi menu
-        'price',       // Harga menu
-        'category_id', // ID kategori
-    ];
+    protected $fillable = ['name', 'description', 'price', 'category_id'];
 
     /**
      * Relasi ke model Category.

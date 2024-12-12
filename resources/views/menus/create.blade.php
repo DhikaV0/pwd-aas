@@ -46,7 +46,7 @@
 
         <!-- Form Tambah Menu -->
         <div class="bg-green-100 shadow-md rounded-lg p-6">
-            <form action="{{ route('store') }}" method="POST">
+            <form action="{{ route('menus.menu') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-medium mb-2">Nama Menu</label>
@@ -74,31 +74,9 @@
                             class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
                             style="height: 60px">
                         <option value="" disabled selected>Pilih Kategori</option>
-                        @foreach($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->categoryname }}</option>
-                        @endforeach
                         <option value="add-new">Tambahkan Kategori Baru</option>
                     </select>
                 </div>
-
-                <!-- Input kategori baru -->
-                <div id="newCategoryInput" class="mb-4 hidden">
-                    <label for="new_category" class="block text-gray-700 font-medium mb-2">Kategori Baru</label>
-                    <input type="text" name="new_category" id="new_category"
-                           class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
-                           style="height: 60px">
-                </div>
-
-                <script>
-                    document.getElementById('category_id').addEventListener('change', function () {
-                        const newCategoryInput = document.getElementById('newCategoryInput');
-                        if (this.value === 'add-new') {
-                            newCategoryInput.classList.remove('hidden');
-                        } else {
-                            newCategoryInput.classList.add('hidden');
-                        }
-                    });
-                </script>
 
                 <div class="flex justify-end">
                     <button type="submit"
