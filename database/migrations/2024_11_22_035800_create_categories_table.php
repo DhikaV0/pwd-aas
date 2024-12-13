@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+            $table->id();  // Creates an auto-incrementing id column
+            $table->string('name');  // Creates a 'name' column of type string
+            $table->timestamps();  // Creates 'created_at' and 'updated_at' columns
         });
     }
 
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::dropIfExists('categories');  // Drops the 'categories' table if it exists
     }
 };

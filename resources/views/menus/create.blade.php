@@ -31,7 +31,7 @@
                 <!-- Mobile Menu Button -->
                 <div class="flex md:hidden">
                     <button type="button" class="text-gray-700 hover:text-gray-900 focus:outline-none" id="menu-toggle">
-                        <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <svg class="w-6 h-6" xmlns="https://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"/>
                         </svg>
                     </button>
@@ -46,7 +46,7 @@
 
         <!-- Form Tambah Menu -->
         <div class="bg-green-100 shadow-md rounded-lg p-6">
-            <form action="{{ route('menus.menu') }}" method="POST">
+            <form action="{{ route('menus.store') }}" method="POST">
                 @csrf
                 <div class="mb-4">
                     <label for="name" class="block text-gray-700 font-medium mb-2">Nama Menu</label>
@@ -74,7 +74,9 @@
                             class="w-full border-gray-300 rounded-lg shadow-sm focus:ring-green-500 focus:border-green-500"
                             style="height: 60px">
                         <option value="" disabled selected>Pilih Kategori</option>
-                        <option value="add-new">Tambahkan Kategori Baru</option>
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
+                        @endforeach
                     </select>
                 </div>
 

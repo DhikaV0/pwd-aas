@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Menu;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class MenuController extends Controller
 {
@@ -48,6 +49,7 @@ class MenuController extends Controller
         }
 
         // Simpan data menu ke database
+        Log::info($request->all());
         Menu::create([
             'name' => $request->name,
             'description' => $request->description,

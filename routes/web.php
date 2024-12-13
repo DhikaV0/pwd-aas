@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\MenuCreateController;
+use App\Http\Controllers\CategoryController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,7 +14,7 @@ use App\Http\Controllers\MenuCreateController;
 
 // Landing page
 Route::get('/', function () {
-    return redirect()->route('login'); // Redirect ke halaman login
+    return redirect()->route('login'); // Redirect to the login page
 });
 
 // Authentication routes
@@ -35,13 +37,17 @@ Route::middleware('auth')->group(function () {
 
     Route::middleware('auth')->group(function () {
         Route::get('/menus/create', [MenuCreateController::class, 'create'])->name('menus.create');
-        Route::post('/menus', [MenuController::class, 'store'])->name('menus.menu');
-        
+        Route::post('/menus', [MenuController::class, 'store'])->name('menus.store');
     });
 
     // Routes for editing and updating menu
     Route::get('/menu/{menu}/edit', [MenuController::class, 'edit'])->name('menu.edit');
     Route::put('/menu/{menu}', [MenuController::class, 'update'])->name('menu.update');
+
+    // Category routes
+    Route::get('categories/index', [CategoryController::class, 'index'])->name('categories.index');  // Show categories
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');  // Store a new category
+    Route::get('/categories', [CategoryController::class, 'index'])->name('menus.category');
 
     // Route to delete a menu
     Route::delete('/menu/{menu}', [MenuController::class, 'destroy'])->name('menu.destroy');
